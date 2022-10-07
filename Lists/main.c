@@ -13,7 +13,7 @@ void show(LOS*);
 void delete(LOS*);
 void add(LOS*, LOS, int);
 void deleteItem(LOS*, int);
-void changeItems(LOS*, int, int);
+LOS* changeItems(LOS*, int, int);
 
 
 int main(void)
@@ -30,10 +30,10 @@ int main(void)
 	list = create(10);
 	show(list);
 	printf("\n");
-	deleteItem(list, 2);
-	show(list);
+	//deleteItem(list, 2);
+	//show(list);
+	list = changeItems(list, 3, 5);
 	printf("\n");
-	changeItems(list, 1, 2);
 	show(list);
 }
 
@@ -106,7 +106,7 @@ void deleteItem(LOS* list, int k)
 	list->next = address;
 }
 
-void changeItems(LOS* list, int a, int b)
+LOS* changeItems(LOS* list, int a, int b)
 {
 	LOS* element = list;
 	void* addressB = NULL;
@@ -119,20 +119,36 @@ void changeItems(LOS* list, int a, int b)
 		a = b;
 		b = c;
 	}
+	
 	if (a == 1 && b == 2)
 	{
-			addressA = list;
-			addressB = list->next;
-			list = list->next;
-			addressAfterB = list->next;
-			list = addressB;
-			list->next = addressA;
-			list = list->next;
-			list->next = addressAfterB;
+		//LOS* forFirstElement = list->next;
+		addressA = list;
+		addressB = list->next;
+		addressAfterB = list->next->next;
+		list = addressB;
+		list->next = addressA;
+		list->next->next = addressAfterB;
+		list = addressB;
+		return list;
+	}
+
+	else if (a == 1)
+	{
+		a -= 1;
+		b -= 1;
+		addressA = list;
+		addressAfterA = list->next;
+		for (int i = 0; i < b; i++)
+		{
+			if (i == b-2) addressB = list->next;
+			if (i == b - 1) addressAfterB = list->next;
+		}
 	}
 	else
 	{
-
+		a -= 1;
+		b -= 1;
 		for (int i = 0; i < b; i++)
 		{
 			list = list->next;
@@ -175,5 +191,7 @@ void changeItems(LOS* list, int a, int b)
 			}
 
 		}
+		list = element;
+		return list;
 	}
 }
