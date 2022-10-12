@@ -32,7 +32,7 @@ int main(void)
 	printf("\n");
 	//deleteItem(list, 2);
 	//show(list);
-	list = changeItems(list, 3, 5);
+	list = changeItems(list, 3, 4);
 	printf("\n");
 	show(list);
 }
@@ -115,7 +115,7 @@ LOS* changeItems(LOS* list, int a, int b)
 	void* addressAfterA = NULL;
 	if (a > b)
 	{
-		int c = b;
+		int c = a;
 		a = b;
 		b = c;
 	}
@@ -130,7 +130,7 @@ LOS* changeItems(LOS* list, int a, int b)
 		list->next = addressA;
 		list->next->next = addressAfterB;
 		list = addressB;
-		return list;
+
 	}
 
 	else if (a == 1)
@@ -141,57 +141,145 @@ LOS* changeItems(LOS* list, int a, int b)
 		addressAfterA = list->next;
 		for (int i = 0; i < b; i++)
 		{
-			if (i == b-2) addressB = list->next;
-			if (i == b - 1) addressAfterB = list->next;
+			list = list->next;
+			if (i == b - 1) 
+			{
+				addressB = list;
+				addressAfterB = list->next;
+			}
+
+		}
+		list = element;
+		list = addressB;
+		list->next = addressAfterA;
+		for (int i = 0; i < b; i++)
+		{
+			list = list->next;
+			if (i == b - 2)
+			{
+				list->next = addressA;
+				list->next->next = addressAfterB;
+			}
+		}
+		list = addressB;
+
+	}
+	else if (a == 2) 
+	{
+		if (b - a == 1)
+		{
+			addressA = list->next;
+			addressB = list->next->next;
+			addressAfterB = list->next->next->next;
+			list->next = addressB;
+			list->next->next = addressA;
+			list->next->next->next = addressAfterB;
+
+		}
+		else
+		{
+			addressA = list->next;
+			addressAfterA = list->next->next;
+			for (int i = 0; i < b; i++)
+			{
+				list = list->next;
+				if (i == b - 2)
+				{
+					addressB = list;
+					addressAfterB = list->next;
+				}
+			}
+			list = element;
+			list->next = addressB;
+			list->next->next = addressAfterA;
+			for (int i = 0; i < b; i++)
+			{
+				list = list->next;
+				if (i == b - 3)
+				{
+					list->next = addressA;
+					list->next->next = addressAfterB;
+				}
+
+			}
+			list = element;
 		}
 	}
 	else
 	{
 		a -= 1;
 		b -= 1;
-		for (int i = 0; i < b; i++)
+		if (b - a == 1)
 		{
-			list = list->next;
-			if (i == b - 2)
+			for (int i = 0; i < b; i++)
 			{
-				addressB = list->next;
+				list = list->next;
+				if (i == a-1)
+				{
+					addressA = list;
+					addressB = list->next;
+					addressAfterB = list->next->next;
+				}
 			}
-			if (i == b - 1)
+			list = element;
+			for (int i = 0; i < b; i++)
 			{
-				addressAfterB = list->next;
+				list = list->next;
+				if (i == a-2)
+				{
+					list->next = addressB;
+					list->next->next = addressA;
+					list->next->next->next = addressAfterB;
+				}
 			}
-			if (i == a - 2)
-			{
-				addressA = list->next;
-			}
-			if (i == a - 1)
-			{
-				addressAfterA = list->next;
-			}
+			list = element;
 		}
-		list = element;
-		for (int i = 0; i < b; i++)
+		else
 		{
-			list = list->next;
-			if (i == a - 2)
+			for (int i = 0; i < b; i++)
 			{
-				list->next = addressB;
-			}
-			if (i == a - 1)
-			{
-				list->next = addressAfterA;
-			}
-			if (i == b - 2)
-			{
-				list->next = addressA;
-			}
-			if (i == b - 1)
-			{
-				list->next = addressAfterB;
-			}
+				list = list->next;
 
+				if (i == a - 1)
+				{
+					addressA = list;
+					addressAfterA = list->next;
+				}
+				else if (i == b - 1)
+				{
+					addressB = list;
+					addressAfterB = list->next;
+				}
+
+
+			}
+			list = element;
+			for (int i = 0; i < b; i++)
+			{
+				list = list->next;
+				if (i == a - 2)
+				{
+					list->next = addressB;
+				}
+				if (i == a - 1)
+				{
+					list->next = addressAfterA;
+				}
+				if (i == b - 2)
+				{
+					list->next = addressA;
+				}
+				if (i == b - 1)
+				{
+					list->next = addressAfterB;
+				}
+
+
+
+			}
+			list = element;
 		}
-		list = element;
-		return list;
-	}
+		}
+		
+	return list;
 }
