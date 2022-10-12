@@ -21,24 +21,27 @@ int main(void)
 	system("chcp 1251>nul");
 	LOS* list = create(10);
 	show(list);
-	printf("\n");
+	
 	LOS str = {25, NULL};
 	add(list, str, 5);
 	show(list);
-	printf("\n");
+	
+	deleteItem(list, 2);
+	show(list);
+	
 	delete(list);
+	printf("\n");
+
 	list = create(10);
 	show(list);
-	printf("\n");
-	//deleteItem(list, 2);
-	//show(list);
+	
 	list = changeItems(list, 3, 4);
-	printf("\n");
 	show(list);
 }
 
 LOS* create(int n)
 {
+	printf("Создание: ");
 	LOS* first = malloc(sizeof(LOS));
 	first->a = 1;
 	first->next = NULL;
@@ -63,10 +66,12 @@ void show(LOS* list)
 		printf("%d ", list->a);
 		list = list->next;
 	}
+	printf("\n");
 }
 
 void delete(LOS* list)
 {
+	printf("Удаление ЛОС: ---");
 	LOS* nextElem = list;
 	while(nextElem)
 	{
@@ -78,6 +83,7 @@ void delete(LOS* list)
 
 void add(LOS* list, LOS item, int k)
 {
+	printf("Добавление: ");
 	LOS* element = malloc(sizeof(LOS));
 	element->a = item.a;
 	for (int i = 0; i < k; i++)
@@ -91,6 +97,7 @@ void add(LOS* list, LOS item, int k)
 
 void deleteItem(LOS* list, int k)
 {
+	printf("Удаление элемента: ");
 	LOS* element = list;
 	for (int i = 0; i < k; i++)
 	{
@@ -108,6 +115,7 @@ void deleteItem(LOS* list, int k)
 
 LOS* changeItems(LOS* list, int a, int b)
 {
+	printf("Смена элементов местами: ");
 	LOS* element = list;
 	void* addressB = NULL;
 	void* addressAfterB = NULL;
@@ -279,7 +287,7 @@ LOS* changeItems(LOS* list, int a, int b)
 			}
 			list = element;
 		}
-		}
+	}
 		
 	return list;
 }
